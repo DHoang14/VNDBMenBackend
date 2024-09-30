@@ -5,6 +5,6 @@ const verifyJWT = require('../../middleware/verifyJWT');
 
 router.route('/:id')
     .get(commentsController.getComments)
-    .post(verifyJWT(), commentsController.createComment);
+    .post(verifyJWT, commentsController.createComment);
 
 module.exports = router;

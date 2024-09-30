@@ -11,7 +11,7 @@ const handleRefreshToken = async (req, res) => {
         //find refresh token
         var poolConnection = await sql.connect(sqlConfig);
         const sqlReq = await poolConnection.request();
-        sqlReq.input('token', sql.Text, refreshToken);
+        sqlReq.input('token', sql.VarChar, refreshToken);
         const sqlRes = await sqlReq.query(`SELECT USERNAME as UserName
             FROM Users
             WHERE REFRESH=@token`);

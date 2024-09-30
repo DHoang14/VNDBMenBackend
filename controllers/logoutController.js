@@ -12,7 +12,7 @@ const handleLogout = async (req, res) => {
         //make sure user is in database
         var poolConnection = await sql.connect(sqlConfig);
         const sqlReq = await poolConnection.request();
-        sqlReq.input('token', sql.Text, refreshToken);
+        sqlReq.input('token', sql.VarChar, refreshToken);
         const sqlRes = await sqlReq.query(`SELECT USERNAME
             FROM Users
             WHERE REFRESH=@token`);
@@ -29,7 +29,7 @@ const handleLogout = async (req, res) => {
 
         //delete refrsh token in db
         const deleteReq = await poolConnection.request();
-        deleteReq.input('token', sql.Text, refreshToken);
+        deleteReq.input('token', sql.VarChar, refreshToken);
         await deleteReq.query(`UPDATE Users
             SET REFRESH=NULL
             WHERE REFRESH=@token`);

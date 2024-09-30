@@ -17,7 +17,7 @@ const createComment = async (req, res) => {
         sqlReq.input('commentID', sql.VarChar, uuid());
         sqlReq.input('characterID', sql.VarChar, req.params.id);
         sqlReq.input('user', sql.VarChar, user);
-        sqlReq.input('content', sql.NText, content);
+        sqlReq.input('content', sql.NVarChar, content);
         sqlReq.input('date', sql.DateTime, new Date());
         await sqlReq.query(`INSERT INTO Comments (COMMENTID, CHARACTERID, USERID, CONTENT, DATE)
             VALUES (@commentID, @characterID, @user, @content, @date)`);
@@ -38,8 +38,8 @@ const getComments = async (req, res) => {
         //find comments for specified character
         var poolConnection = await sql.connect(sqlConfig);
         const sqlReq = await poolConnection.request();
-        sqlReq.input('characterID', sql.VarChar, user);
-        const sqlRes = await sqlReq.query(`SELECT CONTENT as Content, USERID as User, DATE as Date
+        sqlReq.input('characterID', sql.VarChar, req.params.id);
+        const sqlRes = await sqlReq.query(`SELECT CONTENT, USERID, DATE
             FROM Comments
             WHERE CHARACTERID=@characterID
             ORDER BY DATE`);

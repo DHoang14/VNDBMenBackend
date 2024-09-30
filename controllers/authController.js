@@ -41,7 +41,7 @@ const handleLogin = async (req, res) => {
 
             //save refreshtoken into db
             const updateReq = await poolConnection.request();
-            updateReq.input('token', sql.Text, refreshToken);
+            updateReq.input('token', sql.VarChar, refreshToken);
             updateReq.input('user', sql.VarChar, user);
             await updateReq.query(`UPDATE Users
                 SET REFRESH=@token
