@@ -11,16 +11,17 @@ const handleNewUser = async (req, res) => {
     
         //check for duplicate usernames in db
         const duplicateReq = await poolConnection.request();
-        duplicateReq.input('user', sql.NVarChar, user);
-        duplicateRes = await duplicateReq.query(`SELECT USERNAME
+        duplicateReq.input('user', sql.VarChar, user);
+        const duplicateRes = await duplicateReq.query(`SELECT USERNAME
             FROM Users
             WHERE USERNAME=@user`);
         
         if (duplicateRes.recordset.length > 0) return res.sendStatus(409);
         const hashedPass = await bcrypt.hash(pass, 10);
 
+        //create new user
         const sqlReq = await poolConnection.request();
-        sqlReq.input('user', sql.NVarChar, user);
+        sqlReq.input('user', sql.VarChar, user);
         sqlReq.input('pass', sql.Char(60), hashedPass);
         await sqlReq.query(`INSERT INTO Users (USERNAME, PASSWORD)
             VALUES (@user, @pass)`);
