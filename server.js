@@ -17,6 +17,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/comments', require('./routes/api/comments'));
+app.use('/forgotPassword', require('./routes/forgotPassword'));
+app.use('./reset', require('./routes/resetToken'));
+app.use('./updatePassword', require('./routes/updatePassword'));
 
 app.all('*', (req, res) => {
     res.status(404);
