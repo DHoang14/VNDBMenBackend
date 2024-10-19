@@ -39,7 +39,7 @@ const getComments = async (req, res) => {
         var poolConnection = await sql.connect(sqlConfig);
         const sqlReq = await poolConnection.request();
         sqlReq.input('characterID', sql.VarChar, req.params.id);
-        const sqlRes = await sqlReq.query(`SELECT CONTENT, USERID, DATE
+        const sqlRes = await sqlReq.query(`SELECT CONTENT as content, USERID as userID, DATE as date, COMMENTID as commentID
             FROM Comments
             WHERE CHARACTERID=@characterID
             ORDER BY DATE`);
