@@ -1,6 +1,6 @@
 const sqlConfig = require('../config/databaseConfig')
 const sql = require('mssql');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {

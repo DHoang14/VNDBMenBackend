@@ -1,6 +1,6 @@
 const sqlConfig = require('../config/databaseConfig')
 const sql = require('mssql');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const handleUpdatePassword = async (req, res) => {
     const { user, newPassword, resetToken } = req.body;
